@@ -5,9 +5,14 @@ export default class Movies {
         axios.defaults.baseURL = 'http://localhost:3000/api/'
     }
 
-    getAll() {
-        return axios.get('movies')
-    }
+    getAll(term = '') {
+        return axios.get('movies', {
+            props: {
+                term
+            }
+        })
+  
+        }
 
     add(movie) {
         return axios.post('movies',movie)
