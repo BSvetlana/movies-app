@@ -17,3 +17,5 @@ export default class Movies {
         return axios.get(`movies/${id}`)
     }
 }
+
+export const movies = new Movies()
