@@ -4,25 +4,43 @@
             <b-container class="bv-example-row">
                 <b-row class="justify-content-md-center">
                     <b-col cols="6">
-                    
+                        <b-button type="submit"
+                                  variant="danger"  
+                                  @click="selectedAll"
+                                  style="float: right"
+                                  >
+                        Select All
+                        </b-button>
+                        <b-button type="submit"
+                                  variant="success"  
+                                  @click="deselectedAll"
+                                  style="float: right"
+                                  >
+                        Deselect All
+                        </b-button>
                         <movie-search @search-term-change="onSearchTermChanged"></movie-search>
                                <b-card class="text-center" 
                                         v-if="!movies.length"
                                         border-variant="danger">
                                     No Movies
                                 </b-card>
+                               
                         <movies-row :movie="movie"
                                     v-for="movie in movies"
                                     :key="movie.id"
-                                    @on-selected-movie="onSelectedMovie"></movies-row>
+                                    :selected-movies-id="selectedMoviesId"
+                                    @on-selected-movie="onSelectedMovie">
+
+                        </movies-row>
                         <b-modal id="modal1" title="Selected Movies">
                         <p class="my-4">You selected {{ selectedMoviesCounter }} movies </p>
                         </b-modal>
                         <div>You selected: {{ selectedMoviesCounter }} movies</div>
-                        
+
                     </b-col>
                 </b-row>
             </b-container>
+           
         </div>
     </div>
 </template>
@@ -32,16 +50,19 @@ import { movies } from '../services/movies.js'
 import MoviesRow from '../components/MoviesRow'
 import MovieSearch from '../components/MovieSearch'
 
+
     export default {
         name: 'AppMovies',
         components: {
             MoviesRow,
-            MovieSearch
+            MovieSearch,
+            
         },
         data() {
             return {
                 movies: [],
                 selectedMoviesId: [],
+                
             }
         },
         created() {
@@ -64,7 +85,14 @@ import MovieSearch from '../components/MovieSearch'
                 return;
             }
             this.selectedMoviesId.push(movie.id)
-            }
+            },
+        selectedAll(){
+            this.selectedMoviesId = this.movies.map((movie) => movie.id)
+            },
+        deselectedAll() {
+            this.selectedMoviesId = []
+        },
+
         },
         computed: {
             selectedMoviesCounter() {

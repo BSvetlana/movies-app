@@ -34,18 +34,24 @@ export default {
         movie: {
         type: Object,
         required: true
+        },
+        selectedMoviesId: {
+            type: Array,
+            required: true,
+            default: () => []
         }
     },
-    data() {
-        return {
-            selected: false
+    computed: {
+        selected() {
+            return this.selectedMoviesId.indexOf(this.movie.id) > -1;
         }
     },
     methods: {
         onSelected(){
             this.selected = true
-            this.$emit('on-selected-movie',this.movie)
+            this.$emit('on-selected-movie', this.movie, !this.selected)
         }
+
     }
 
     

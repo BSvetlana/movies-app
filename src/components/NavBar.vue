@@ -4,12 +4,12 @@
 
       <b-navbar-toggle target="nav_collapse"> Ceca</b-navbar-toggle>
 
-      <router-link :to="{name: 'home'}"><b-navbar-brand>Movies</b-navbar-brand></router-link>
+      <router-link :to="{ name: 'home' }"><b-navbar-brand>Movies</b-navbar-brand></router-link>
 
       <b-collapse is-nav id="nav_collapse">
 
         <b-navbar-nav>
-          <b-nav-item href="#"></b-nav-item>
+          <b-nav-item :to="{ name: 'add' }">Add Movies</b-nav-item>
           <b-nav-item href="#"></b-nav-item>
         </b-navbar-nav>
 
