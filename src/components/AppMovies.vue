@@ -3,7 +3,14 @@
         <div class="container mt-4">
             <b-container class="bv-example-row">
                 <b-row class="justify-content-md-center">
-                    <b-col cols="6">
+                    <b-col cols="11">
+                        <div class="mb-3">
+                          <b-dropdown text="Sort by" variant="danger">
+                            <b-dropdown-item @click="sortBy('title','asc')">Name ASC</b-dropdown-item>
+                            <b-dropdown-item @click="sortBy('title','desc')">Name DESC</b-dropdown-item>
+                            <b-dropdown-item @click="sortBy('duration','asc')">Duration ASC</b-dropdown-item>
+                            <b-dropdown-item @click="sortBy('duration','desc')">Duration DESC</b-dropdown-item>
+                        </b-dropdown>
                         <b-button type="submit"
                                   variant="danger"  
                                   @click="selectedAll"
@@ -18,6 +25,7 @@
                                   >
                         Deselect All
                         </b-button>
+                        </div>
                         <movie-search @search-term-change="onSearchTermChanged"></movie-search>
                                <b-card class="text-center" 
                                         v-if="!movies.length"
@@ -92,6 +100,12 @@ import MovieSearch from '../components/MovieSearch'
         deselectedAll() {
             this.selectedMoviesId = []
         },
+        sortBy(prop, order){
+            let orderCoefficient = order === 'asc' ? 1 : -1
+            this.movies = this.movies.sort((movie1,movie2) => {
+                return movie1[prop] >= movie2[prop] ? orderCoefficient : -orderCoefficient
+            })
+        }
 
         },
         computed: {
